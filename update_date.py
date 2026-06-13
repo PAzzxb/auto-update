@@ -1,13 +1,27 @@
 import json
 import re
 from datetime import datetime
+import os
 
-with open('config.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
+# 强制使用北京时间
+os.environ['TZ'] = 'Asia/Shanghai'
+try:
+    from time import tzset
+    tzset()
+except ImportError:
+    # Windows 环境会跳过，但 GitHub Actions 是 Linux，没问题
+    pass
 
-today = datetime.now().strftime('%Y年%m月%d日')
+# 获取当前北京时间
+now = datetime.now()
+today = now.strftime('%Y年%m月%d日')
+# 去掉前导零：06月 -> 6月，05日 -> 5日
 today = re.sub(r'月0(\d)日', r'月\1日', today)
 today = re.sub(r'年0(\d)月', r'年\1月', today)
+
+# 读取 config.json
+with open('config.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
 
 date_pattern = r'\d{4}年\d{1,2}月\d{1,2}日'
 
