@@ -30,4 +30,3 @@ jobs:
           git add config.json
           git diff --quiet && git diff --staged --quiet || git commit -m "chore: update date in tipMessage"
           git push
-```
