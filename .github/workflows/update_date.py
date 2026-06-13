@@ -25,4 +25,3 @@ def update_tip_message_date(json_path="config.json"):
 
 if __name__ == "__main__":
     update_tip_message_date()
-```
