@@ -7,6 +7,6 @@
     "pushEnabled": true,
     "verifyCode": "889999",
     "imageUrl": "https://www.panurl.cn/view.php/71ee62ed9a21d320e8a1eadeec003f91.png",
-    "tipMessage": "2026年6月14日",
+    "tipMessage": "2026年6月14日 接口日志：每天凌晨零点起只弹窗一遍,十几秒钟返回即可查看接口最新动态",
     "adminPassword": ""
 }
