@@ -1,0 +1,14 @@
+```json
+{
+    "enabled": true,
+    "allowClose": true,
+    "countdownClose": true,
+    "countdownSeconds": 13,
+    "dailyLimit": true,
+    "pushEnabled": true,
+    "verifyCode": "889999",
+    "imageUrl": "https://700sjro44343.vicp.fun/vip/ui/imge/4Khelp.png",
+    "tipMessage": "2026年6月12日接口更新日志：\r\n【接口内容仅供测试，所有资源均来自网络分享】\r\n1.修复部分资源 弹幕 闪退问题\r\n2.修复恢复豆瓣筛选功能\r\n3.删除无效资源，修复部分资源\r\n4.修复网盘资源\r\n扫一扫学习网盘4K资源观看教程：\r\n......",
+    "adminPassword": "@chen147"
+}
+```
