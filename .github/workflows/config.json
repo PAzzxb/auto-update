@@ -2,12 +2,11 @@
     "enabled": true,
     "allowClose": true,
     "countdownClose": true,
-    "countdownSeconds": 13,
+    "countdownSeconds": 8,
     "dailyLimit": true,
     "pushEnabled": true,
     "verifyCode": "889999",
     "imageUrl": "",
-    "lastUpdateDate": "2026年6月12日",
-    "tipMessage": "同步信息：每天凌晨起\n弹窗一遍十几秒钟\n返回即可查看同步最新动态!",
+    "tipMessage": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n    2026年06月12日\n    \n    同步信息：每天凌晨起\n    弹窗一遍十几秒钟\n    返回即可查看同步最新动态！\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     "adminPassword": ""
 }
