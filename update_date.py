@@ -18,7 +18,7 @@ config['imageUrl'] = "https://img.cdn1.vip/i/6a2e4678af9f9_1781417592.webp"
 # 显示完整信息（日期 + 星期 + 时间）
 tip_message = f"""━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     {today} {weekday}
-    {current_time} 更新
+    {current_time} 同步信息
     
     同步信息：每天凌晨起
     弹窗一遍十几秒钟
