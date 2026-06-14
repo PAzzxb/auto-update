@@ -4,66 +4,32 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
-    inputs:
-      force_update:
-        description: '强制更新（忽略日期检查）'
-        required: false
-        type: boolean
-        default: false
 
 env:
   TZ: 'Asia/Shanghai'
 
 jobs:
   sync-date:
-    name: 🎯 Sync Date to config.json
     runs-on: ubuntu-latest
     permissions:
       contents: write
     
     steps:
-      - name: 🎬 Start Workflow
-        run: echo "🚀 Starting date sync at $(date '+%Y-%m-%d %H:%M:%S')"
-
-      - name: 📦 Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: 🐍 Setup Python
+      
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: 🛠️ Run Update Script
-        id: script
-        run: |
-          echo "📝 Executing update script..."
-          python update_date.py
-          echo "✅ Script executed successfully"
-          
-          # 读取更新后的日期
-          DATE=$(python -c "import json; data=json.load(open('config.json')); print(data['tipMessage'].split('\n')[0])")
-          echo "current_date=$DATE" >> $GITHUB_OUTPUT
-          
-      - name: 💾 Commit Changes
+      
+      - name: Run update script
+        run: python update_date.py
+      
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
-          git config.user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add config.json
-          git commit -m "📅 chore: sync date to ${{ steps.script.outputs.current_date }}
-          
-          - Auto-updated by GitHub Actions
-          - Triggered by: ${{ github.event_name }}
-          - Date: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-
-      - name: 🚀 Push Changes
-        run: git push
-
-      - name: ✅ Summary
-        run: |
-          echo "## 🎉 Workflow Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status**: ✅ Completed" >> $GITHUB_STEP_SUMMARY
-          echo "- **Date**: ${{ steps.script.outputs.current_date }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Time**: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          git commit -m "📅 force update date" || echo "No changes to commit"
+          git push
