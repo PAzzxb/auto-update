@@ -1,20 +1,13 @@
 {
-    "config_version": "1.0.0",
-    "last_update": "2026-06-14T00:00:00+08:00",
-    "settings": {
-        "enabled": true,
-        "allowClose": true,
-        "countdownClose": true,
-        "countdownSeconds": 13,
-        "dailyLimit": true,
-        "pushEnabled": true,
-        "adminPassword": ""
-    },
-    "verification": {
-        "verifyCode": "889999"
-    },
-    "content": {
-        "imageUrl": "",
-        "tipMessage": "2026年6月14日\n同步信息：每天凌晨起\n弹窗一遍十几秒钟\n返回即可查看同步最新动态!"
-    }
+    "_comment": "弹窗配置文件",
+    "enabled": true,
+    "allowClose": true,
+    "countdownClose": true,
+    "countdownSeconds": 13,
+    "dailyLimit": true,
+    "pushEnabled": true,
+    "verifyCode": "889999",
+    "imageUrl": "",
+    "tipMessage": "2026年6月14日\n同步信息：每天凌晨起\n弹窗一遍十几秒钟\n返回即可查看同步最新动态!",
+    "adminPassword": ""
 }
