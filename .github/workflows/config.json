@@ -7,6 +7,7 @@
     "pushEnabled": true,
     "verifyCode": "889999",
     "imageUrl": "",
-    "tipMessage": "2026年6月12日\r\n同步信息：每天凌晨起\r\n弹窗一遍十几秒钟\r\n返回即可查看同步最新动态!",
+    "lastUpdateDate": "2026年6月12日",
+    "tipMessage": "同步信息：每天凌晨起\n弹窗一遍十几秒钟\n返回即可查看同步最新动态!",
     "adminPassword": ""
 }
