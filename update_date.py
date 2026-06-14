@@ -14,7 +14,7 @@ current_time = now.strftime('%H:%M:%S')
 
 # 设置倒计时秒数
 config['countdownSeconds'] = 8
-
+config['imageUrl'] = "https://img.cdn1.vip/i/6a2e4678af9f9_1781417592.webp"  
 # 显示完整信息（日期 + 星期 + 时间）
 tip_message = f"""━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     {today} {weekday}
