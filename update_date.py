@@ -1,42 +1,17 @@
 import json
-import re
 from datetime import datetime
-import os
 
-# 强制使用北京时间
-os.environ['TZ'] = 'Asia/Shanghai'
-try:
-    from time import tzset
-    tzset()
-except ImportError:
-    # Windows 环境会跳过，但 GitHub Actions 是 Linux，没问题
-    pass
-
-# 获取当前北京时间
-now = datetime.now()
-today = now.strftime('%Y年%m月%d日')
-# 去掉前导零：06月 -> 6月，05日 -> 5日
-today = re.sub(r'月0(\d)日', r'月\1日', today)
-today = re.sub(r'年0(\d)月', r'年\1月', today)
-
-# 读取 config.json
 with open('config.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
+    config = json.load(f)
 
-date_pattern = r'\d{4}年\d{1,2}月\d{1,2}日'
+# 更新日期字段
+today = datetime.now().strftime('%Y年%m月%d日')
+config['lastUpdateDate'] = today
 
-if 'tipMessage' in data:
-    match = re.search(date_pattern, data['tipMessage'])
-    if match:
-        old_date = match.group(0)
-        data['tipMessage'] = re.sub(date_pattern, today, data['tipMessage'], count=1)
-        print(f"✅ 日期已更新: {old_date} → {today}")
-    else:
-        print("⚠️ 未找到日期，请检查 tipMessage 格式")
-else:
-    print("❌ config.json 中没有 tipMessage 字段")
+# 如果 tipMessage 也需要包含日期，可以动态生成
+config['tipMessage'] = f"{today}\n同步信息：每天凌晨起\n弹窗一遍十几秒钟\n返回即可查看同步最新动态!"
 
 with open('config.json', 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=4)
+    json.dump(config, f, ensure_ascii=False, indent=4)
 
-print("🎉 完成")
+print(f"✅ Updated to: {today}")
