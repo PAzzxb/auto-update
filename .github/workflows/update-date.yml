@@ -38,12 +38,12 @@ tip_message = f"""
 config['tipMessage'] = tip_message
 print("✏️  已生成新的 tipMessage")
 
-# ========== 6. 写回文件 ==========
+
 print("💾 正在写入 config.json...")
 with open('config.json', 'w', encoding='utf-8') as f:
     json.dump(config, f, ensure_ascii=False, indent=4)
 print("✅ 写入完成")
 
-# ========== 7. 最终确认 ==========
+
 print(f"🎉 更新完成: {today} {weekday}")
 print("👋 脚本执行结束")
