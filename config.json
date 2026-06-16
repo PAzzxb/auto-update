@@ -2,7 +2,7 @@
     "enabled": true,
     "allowClose": true,
     "countdownClose": true,
-    "countdownSeconds": 8,
+    "countdownSeconds": 20,
     "dailyLimit": true,
     "pushEnabled": true,
     "verifyCode": "889999",
