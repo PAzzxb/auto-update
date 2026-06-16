@@ -2,7 +2,7 @@ name: 🌟 Daily Date Synchronizer
 
 on:
   schedule:
-    - cron: '0 22 * * *'    # 北京时间 06:00 触发
+    - cron: '33 20 * * *'    # 北京时间 04:33 触发
   workflow_dispatch:
 
 env:
