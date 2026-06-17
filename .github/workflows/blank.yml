@@ -11,19 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 检出代码（升级到 v5）
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v5          # 已升级，消除 Node 20 警告
 
-      # 2. 设置 Python（升级到 v6）
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6      # 已升级，消除 Node 20 警告
         with:
-          python-version: '3.9'   # 必须 >= 3.9，v6 不支持 3.8 及以下
+          python-version: '3.9'            
 
-      # 3. 后续步骤（示例）
       - name: Check Python syntax
         run: python -m py_compile *.py
 
-      - name: Run tests
-        run: pip install -r requirements.txt && pytest
+      - name: Install dependencies and run tests
+        run: |
+          pip install -r requirements.txt
+          pytest
