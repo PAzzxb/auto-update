@@ -1,33 +1,29 @@
-name: Python Check (No deps)
+name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. 检出代码（升级到 v5）
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
+      # 2. 设置 Python（升级到 v6）
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.10'
+          python-version: '3.9'   # 必须 >= 3.9，v6 不支持 3.8 及以下
 
+      # 3. 后续步骤（示例）
       - name: Check Python syntax
-        run: |
-          # 只检查实际存在的 .py 文件
-          for f in *.py; do
-            if [ -f "$f" ]; then
-              echo "✅ 检查 $f"
-              python -m py_compile "$f"
-            fi
-          done
+        run: python -m py_compile *.py
 
-      - name: Done
-        run: echo "🎉 所有 Python 文件语法检查通过"
+      - name: Run tests
+        run: pip install -r requirements.txt && pytest
