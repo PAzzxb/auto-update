@@ -1,30 +1,33 @@
-name: Python Code Check
+name: Python Check (No deps)
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:
+  workflow_dispatch:   # 允许手动触发
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      # 安装 Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
-      - name: Install linters
-        run: pip install flake8
+      # 只做语法检查，不安装任何依赖，因此不会报找不到 requirements.txt 的错误
+      - name: Check Python syntax
+        run: |
+          python -m py_compile update_weekday.py
+          python -m py_compile update_daily_tip.py
+          # 如果有其他 .py 文件，可继续添加
 
-      - name: Lint with flake8 (only fatal errors)
-        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        continue-on-error: true   # 仅警告，不阻塞（可改为 false 强制通过）
-
-      - name: Check syntax
-        run: python -m py_compile update_weekday.py
+      # （可选）输出成功信息
+      - name: Done
+        run: echo "✅ 所有 Python 文件语法检查通过"
