@@ -5,29 +5,27 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:   # 允许手动触发
+  workflow_dispatch:   
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      # 检出代码
+      
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 安装 Python
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # 只做语法检查，不安装任何依赖，因此不会报找不到 requirements.txt 的错误
+      
       - name: Check Python syntax
         run: |
           python -m py_compile update_weekday.py
           python -m py_compile update_daily_tip.py
-          # 如果有其他 .py 文件，可继续添加
-
-      # （可选）输出成功信息
+          
       - name: Done
         run: echo "✅ 所有 Python 文件语法检查通过"
