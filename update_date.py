@@ -56,7 +56,7 @@ def main():
     # 获取当前北京时间
     now = get_beijing_time()
     date_str, weekday = get_current_date_weekday(now)
-    timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+    date_only = now.strftime("%Y-%m-%d")   # 仅日期，用于日志
 
     # 如果 config.json 不存在，则创建空字典
     if not CONFIG_PATH.exists():
@@ -66,7 +66,6 @@ def main():
             config = json.load(f)
 
     # 检查日期是否变化（避免重复写入）
-    # 这里我们用 "tipDate" 字段记录上次更新的日期，用于判断
     if config.get("tipDate") == date_str:
         print(f"ℹ️ 日期未变 ({date_str})，跳过更新。")
         exit(0)
@@ -81,8 +80,8 @@ def main():
     with open(CONFIG_PATH, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=4)
 
-    # 写入日志（与之前的 update.log 保持一致）
-    log_entry = f"[{timestamp}] 更新每日提示 → {date_str} {weekday}"
+    # 写入日志（只记录日期，不含时间）
+    log_entry = f"[{date_only}] 更新每日提示 → {date_str} {weekday}"
     append_log(log_entry)
 
     print(f"✅ 更新完成: {date_str} {weekday}")
