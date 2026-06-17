@@ -1,12 +1,12 @@
 {
-    "enabled": true,
-    "allowClose": true,
-    "countdownClose": true,
-    "countdownSeconds": 20,
-    "dailyLimit": true,
-    "pushEnabled": true,
-    "verifyCode": "889999",
-    "imageUrl": "https://img.cdn1.vip/i/6a2e4678af9f9_1781417592.webp",
-    "tipMessage": "******************************\n🌟 温馨提醒\n📅 2026年06月12日 星期五\nℹ️ 状态:每日首次显示  \n⏱️ 20秒后自动关闭   \n🔄 按返回键刷新最新动态\n******************************",
-    "adminPassword": ""
+  "enabled": true,
+  "allowClose": true,
+  "countdownClose": true,
+  "countdownSeconds": 20,
+  "dailyLimit": true,
+  "pushEnabled": true,
+  "verifyCode": "889999",
+  "imageUrl": "https://img.cdn1.vip/i/6a2e4678af9f9_1781417592.webp",
+  "tipMessage": "╔═════════════════════╗\n║              ✨ 温馨提醒 ✨             ║\n║                                                     ║\n║    📅 2026年06月12日  星期五   ║\n║    ℹ️  状态：每日首次显示          ║\n║    ⏱️  20秒后自动关闭                ║\n║    🔄  按返回键刷新最新动态      ║\n║                                                     ║\n╚═════════════════════╝",
+  "adminPassword": ""
 }
