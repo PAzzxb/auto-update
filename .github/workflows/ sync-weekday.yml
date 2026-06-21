@@ -2,7 +2,7 @@ name: 🌟 Daily Weekday Synchronizer
 
 on:
   schedule:
-    - cron: '23 5 * * *'     
+    - cron: '30 3,15 * * *'   # 每天 3:30 和 15:30 运行    
   workflow_dispatch:           
 
 env:
