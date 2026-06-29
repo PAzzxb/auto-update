@@ -51,17 +51,14 @@ if len(lines) > 50:
 with open(LOG_FILE, 'w', encoding='utf-8') as f:
     f.writelines(lines)
 
-# 4. 更新 README.md（替换占位符）
-# 4. 更新 README.md（替换占位符）
+# 4. 更新 README.md（匹配固定文字）
 try:
     with open('README.md', 'r', encoding='utf-8') as f:
         readme = f.read()
-    # 替换占位符
-    new_readme = re.sub(r'<!-- UPDATE_TIME -->', full_time, readme)
+    # 用正则替换整行（不管原来是什么时间，都换成当前时间）
+    new_readme = re.sub(r'^上次自动同步：.*$', f'上次自动同步：{full_time}', readme, flags=re.MULTILINE)
     with open('README.md', 'w', encoding='utf-8') as f:
         f.write(new_readme)
     print(f"✅ README 已更新为：{full_time}")
-except FileNotFoundError:
-    print("⚠️ README.md 不存在，跳过")
 except Exception as e:
-    print(f"⚠️ 更新 README 时发生错误：{e}")
+    print(f"⚠️ 更新 README 失败：{e}")
