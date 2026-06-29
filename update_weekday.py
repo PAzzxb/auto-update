@@ -53,19 +53,15 @@ with open(LOG_FILE, 'w', encoding='utf-8') as f:
 
 # 4. 更新 README.md（替换占位符）
 # 4. 更新 README.md（替换占位符）
-# 4. 更新 README.md（替换占位符）
 try:
     with open('README.md', 'r', encoding='utf-8') as f:
         readme = f.read()
-    # 直接替换占位符
+    # 替换占位符
     new_readme = re.sub(r'<!-- UPDATE_TIME -->', full_time, readme)
     with open('README.md', 'w', encoding='utf-8') as f:
         f.write(new_readme)
     print(f"✅ README 已更新为：{full_time}")
+except FileNotFoundError:
+    print("⚠️ README.md 不存在，跳过")
 except Exception as e:
-    print(f"⚠️ 更新 README 失败：{e}")
-    with open('README.md', 'r', encoding='utf-8') as f:
-    readme = f.read()
-    print("README 内容片段：", readme[:200])   # 打印前200字符
-# 然后尝试替换
-new_readme = re.sub(r'上次自动同步：.*', f'上次自动同步：{full_time}', readme)
+    print(f"⚠️ 更新 README 时发生错误：{e}")
