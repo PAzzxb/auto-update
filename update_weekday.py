@@ -1,32 +1,37 @@
-import re
+import json
 import datetime
-import pytz
+import re
+from zoneinfo import ZoneInfo   # Python 3.9+ 标准库
 
-# 1. 获取当前北京时间
-beijing_tz = pytz.timezone('Asia/Shanghai')
-now = datetime.datetime.now(beijing_tz)
-
-# 格式化你想显示的内容（示例："2026-06-29 星期一 14:30:25"）
-formatted_time = now.strftime("%Y-%m-%d %A %H:%M:%S")
-# 如果你想用中文星期，可以手动映射（因为strftime英文环境下输出英文）
+# 1. 获取北京时间
+now = datetime.datetime.now(ZoneInfo('Asia/Shanghai'))
 weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 weekday_cn = weekdays[now.weekday()]
-final_text = f"{now.strftime('%Y-%m-%d')} {weekday_cn} {now.strftime('%H:%M:%S')}"
+full_time = now.strftime("%Y-%m-%d %H:%M:%S") + f" {weekday_cn}"
 
-# 2. 读取 README.md
-with open('README.md', 'r', encoding='utf-8') as f:
-    content = f.read()
+# 2. 更新 config.json
+try:
+    with open('config.json', 'r', encoding='utf-8') as f:
+        config = json.load(f)
+except FileNotFoundError:
+    config = {}
+config['last_weekday'] = weekday_cn
+config['last_update'] = full_time
+with open('config.json', 'w', encoding='utf-8') as f:
+    json.dump(config, f, indent=2, ensure_ascii=False)
 
-# 3. 替换占位符（在 README 中写一个标记，比如 <!-- UPDATE_TIME -->）
-# 假设你的 README 里有这行： `上次自动同步时间：<!-- UPDATE_TIME -->`
-new_content = re.sub(
-    r'<!-- UPDATE_TIME -->',  # 查找这个注释标记
-    final_text,               # 替换成计算好的时间
-    content
-)
+# 3. 追加 update.log
+with open('update.log', 'a', encoding='utf-8') as f:
+    f.write(f"{full_time} 更新完成\n")
 
-# 4. 写回 README.md
-with open('README.md', 'w', encoding='utf-8') as f:
-    f.write(new_content)
+# 4. 更新 README.md（替换占位符）
+try:
+    with open('README.md', 'r', encoding='utf-8') as f:
+        readme = f.read()
+    new_readme = re.sub(r'<!-- UPDATE_TIME -->', full_time, readme)
+    with open('README.md', 'w', encoding='utf-8') as f:
+        f.write(new_readme)
+except FileNotFoundError:
+    pass
 
-print(f"README 时间已更新为：{final_text}")
+print(f"✅ 更新时间：{full_time}")
