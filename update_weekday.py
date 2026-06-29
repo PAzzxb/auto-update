@@ -62,7 +62,7 @@ try:
     else:
         print("❌ 没有找到占位符！请检查 README.md 内容")
         # 为避免错误，可以跳过写回
-    new_readme = re.sub(r'<!-- UPDATE_TIME -->', full_time, readme)
+    new_readme = re.sub(r'上次自动同步：.*', f'上次自动同步：{full_time}', readme)
     with open('README.md', 'w', encoding='utf-8') as f:
         f.write(new_readme)
     print(f"✅ README 已更新为：{full_time}")
