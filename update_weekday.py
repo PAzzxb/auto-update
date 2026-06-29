@@ -29,7 +29,7 @@ except FileNotFoundError:
     lines = []
 
 # 追加新的一行
-lines.append(f"{full_time} 更新完成\n")
+lines.append(f"[{now.strftime('%Y-%m-%d')}] 更新每日提示 → {now.strftime('%Y年%m月%d日')} {weekday_cn}\n")
 
 # 如果超过50行，只保留最后100行（砍掉最旧的开头）
 if len(lines) > 50:
