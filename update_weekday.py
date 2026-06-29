@@ -17,6 +17,18 @@ except FileNotFoundError:
     config = {}
 config['last_weekday'] = weekday_cn
 config['last_update'] = full_time
+# 更新提示内容中的日期
+new_date_str = now.strftime("%Y年%m月%d日")
+config['tipDate'] = new_date_str
+config['tipMessage'] = (
+    "\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    "🌟 温馨提醒\n"
+    f"📅 {new_date_str} {weekday_cn}\n"
+    "ℹ️ 状态：每日首次显示\n"
+    "⏱️ 20秒后自动关闭\n"
+    "🔄 按返回键刷新最新资源\n"
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+)
 with open('config.json', 'w', encoding='utf-8') as f:
     json.dump(config, f, indent=2, ensure_ascii=False)
 
