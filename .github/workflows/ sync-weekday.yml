@@ -35,7 +35,7 @@ jobs:
       - name: Commit and push if changed
         run: |
           # 检查三个文件是否有改动（新增 README.md）
-          if git diff --quiet config.json update.log README.md; then
+          if git diff --quiet config.json update.log README.md banner.jpg; then
             echo "ℹ️ 没有变化，无需提交。"
             exit 0
           fi
@@ -44,7 +44,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
           # 同时添加 config.json update.log README.md
-          git add config.json update.log README.md
+          git add config.json update.log README.md banner.jpg
           
           # 获取新星期（保留原有逻辑）
           NEW_WEEKDAY=$(cat config.json | jq -r '.last_weekday')
