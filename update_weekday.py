@@ -97,8 +97,33 @@ except FileNotFoundError:
 config['last_weekday'] = weekday_cn
 config['last_update']  = full_time
 config['tipDate']      = new_date_str
-# 文字精简（图片当主角，消除重复）
-config['tipMessage']   = " "
+
+# 每日一言（GitHub Actions 海外拉取，写入弹窗上方文字；失败则用备用句）
+def fetch_hitokoto():
+    try:
+        req = urllib.request.Request("https://v1.hitokoto.cn/?encode=json",
+              headers={"User-Agent": "Mozilla/5.0"})
+        d = json.loads(urllib.request.urlopen(req, timeout=15).read().decode("utf-8"))
+        txt = d.get("hitokoto", "").strip()
+        frm = d.get("from", "").strip()
+        return txt, frm
+    except Exception as e:
+        print(f"⚠️ 一言获取失败：{e}")
+        return "", ""
+
+hito, hito_from = fetch_hitokoto()
+if not hito:
+    hito = "愿你所行皆坦途，所遇皆温柔。"
+    hito_from = ""
+_from_line = f"\n            —— {hito_from}" if hito_from else ""
+config['tipMessage'] = (
+    "\n"
+    "╭─────────────╮\n"
+    "     ✨ 每 日 一 言 ✨\n"
+    f"     💬 {hito}{_from_line}\n"
+    f"     🗓 {new_date_str} {weekday_cn}\n"
+    "╰─────────────╯\n"
+)
 # 图片走视频同款 ghfast 通道（用户联通关代理可达；CF/niuwa 被墙弃用）
 # banner.jpg 就在本仓(auto-update)，workflow 内置 token 可直接提交
 config['imageUrl']     = "https://www.ghfast.top/github.com/PAzzxb/auto-update/raw/main/banner.jpg"
