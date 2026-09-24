@@ -1,6 +1,7 @@
 import json
 import datetime
 import re
+import urllib.request
 from zoneinfo import ZoneInfo   # Python 3.9+ 内置，无需安装
 
 # 1. 获取北京时间
@@ -8,6 +9,20 @@ now = datetime.datetime.now(ZoneInfo('Asia/Shanghai'))
 weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 weekday_cn = weekdays[now.weekday()]
 full_time = now.strftime("%Y-%m-%d %H:%M:%S") + f" {weekday_cn}"
+
+# 1.5 获取必应每日一图（小尺寸 640x360，约 40KB），失败则保留原图
+def fetch_bing_image():
+    try:
+        api = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN"
+        req = urllib.request.Request(api, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = json.loads(r.read().decode("utf-8"))
+        urlbase = data["images"][0]["urlbase"]          # 形如 /th?id=OHR.xxxx
+        # 640x360 固定尺寸后缀（实测可用、体积小）
+        return f"https://cn.bing.com{urlbase}_640x360.jpg"
+    except Exception as e:
+        print(f"⚠️ 获取必应每日图失败：{e}")
+        return None
 
 # 2. 更新 config.json（覆盖写入，永远只保留最新1条）
 try:
@@ -29,6 +44,11 @@ config['tipMessage'] = (
     "🔄 按返回键刷新最新资源\n"
     "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 )
+# 每日一图：必应壁纸，取到才更新
+bing = fetch_bing_image()
+if bing:
+    config['imageUrl'] = bing
+    print(f"🖼️ 今日图片：{bing}")
 with open('config.json', 'w', encoding='utf-8') as f:
     json.dump(config, f, indent=2, ensure_ascii=False)
 
